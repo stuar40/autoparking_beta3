@@ -30,7 +30,7 @@ connection = mysql.createConnection(
  		  database: 'autoparking_v1'
     }
 );*/
-mysqlPool.connect()
+//mysqlPool.connect()
 
 
 

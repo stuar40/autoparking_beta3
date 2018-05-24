@@ -1,4 +1,14 @@
 'use strict'
+var mysql = require('mysql');
+
+var mysqlPool  = mysql.createPool({
+    host : "160.153.16.62",
+    user : "autoparking2018",
+    password: "autoparking@2018",
+    database :"autoparking_v1",
+    port:3306
+
+});
 
 
 const db = require('../config') //reference of dbconnection.js
@@ -13,7 +23,7 @@ const ciudad = {
                       console.error(err);
                       return;
                         }//If no error here you get your query output.
-                  return db.query("SELECT * FROM ciudad", callback);
+                  return connection.query("SELECT * FROM ciudad", callback);
                   connection.end();// After performing the operation then closed the connection.
               });                   });
 
@@ -21,7 +31,7 @@ const ciudad = {
 
     //**************************************************
     getCiudadById: function(ciudadId, callback) {
-      var CiudadById = "SELECT * FROM ciudad WHERE id_ciudad = ?", [ciudadId]; //here store sql query in strQuery variable.
+      var CiudadById = "SELECT * FROM ciudad"; //here store sql query in strQuery variable.
       mysqlPool.getConnection(function(err, connection) {
                 if(err) throw err;
                 connection.query(CiudadById, function(err, rows) {
@@ -40,7 +50,7 @@ const ciudad = {
 
     addCiudad: function(ciudad, callback) {
 
-      var adCiudad ="Insert into ciudad values(?,?,?)", [ciudad.id_ciudad, ciudad.nombre_ciudad, ciudad.pais_idpais] ; //here store sql query in strQuery variable.
+      var adCiudad ="SELECT * FROM ciudad"; //here store sql query in strQuery variable.
       mysqlPool.getConnection(function(err, connection) {
                 if(err) throw err;
                 connection.query(adCiudad, function(err, rows) {
@@ -57,7 +67,7 @@ const ciudad = {
 
         //*******************************************************************
     deleteCiudad: function(ciudadId, callback) {
-      var delCiudad ="DELETE FROM ciudad WHERE id_ciudad = ?", [ciudadId] ; //here store sql query in strQuery variable.
+      var delCiudad ="SELECT * FROM ciudad" ; //here store sql query in strQuery variable.
       mysqlPool.getConnection(function(err, connection) {
                 if(err) throw err;
                 connection.query(delCiudad, function(err, rows) {
@@ -74,7 +84,7 @@ const ciudad = {
     //*************************************************************************************************
     updateCiudad: function(ciudadId, ciudad, callback) {
 
-      var upCiudad ="UPDATE ciudad SET nombre_ciudad=?, pais_idpais=?  WHERE id_ciudad=?", [ciudad.nombre_ciudad, ciudad.pais_idpais, ciudadId] ; //here store sql query in strQuery variable.
+      var upCiudad ="SELECT * FROM ciudad"; //here store sql query in strQuery variable.
       mysqlPool.getConnection(function(err, connection) {
                 if(err) throw err;
                 connection.query(upCiudad, function(err, rows) {
